@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details Input</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: wheat;
+        }
+        header {
+            background-color: greenyellow;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>GREEN GADGET MARKET PLACE (e-waste Management)</h1>
+    </header>
+    <h1>ALL PRODUCTS</h1>
+    <form id="productForm">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" required><br><br>
+
+        <label for="productImage">Product Image URL:</label>
+        <input type="url" id="productImage" name="productImage" required><br><br>
+
+        <label for="productDescription">Product Description:</label>
+        <textarea id="productDescription" name="productDescription" required></textarea><br><br>
+
+        <label for="productCondition">Condition:</label>
+        <input type="text" id="productCondition" name="productCondition" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('productForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const productName = document.getElementById('productName').value;
+            const productImage = document.getElementById('productImage').value;
+            const productDescription = document.getElementById('productDescription').value;
+            const productCondition = document.getElementById('productCondition').value;
+
+            const productDetails = {
+                id: Date.now(),
+                name: productName,
+                image: productImage,
+                description: productDescription,
+                condition: productCondition
+            };
+
+            let products = JSON.parse(localStorage.getItem('products')) || [];
+            products.push(productDetails);
+            localStorage.setItem('products', JSON.stringify(products));
+            window.location.href = 'items.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: wheat;
+        }
+        header {
+            background-color: greenyellow;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+        .box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            margin: 10px;
+            position: relative;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>GREEN GADGET MARKET PLACE (e-waste Management)</h1>
+    </header>
+    <h1>VIEW ALL PRODUCTS HERE</h1>
+    <a href="page2.html">Click here to add products</a>
+    <div class="container" id="productDetails"></div>
+
+    <script>
+        window.onload = function() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+
+            if (products.length > 0) {
+                const productDetailsDiv = document.getElementById('productDetails');
+                products.forEach(product => {
+                    const productBox = document.createElement('div');
+                    productBox.className = 'box';
+                    productBox.innerHTML = `
+                        <h2>${product.name}</h2>
+                        <img src="${product.image}" alt="${product.name}">
+                        <p>${product.description}</p>
+                        <p><strong>Condition:</strong> ${product.condition}</p>
+                        <button class="delete-btn" onclick="deleteProduct(${product.id})">Delete</button>
+                    `;
+                    productDetailsDiv.appendChild(productBox);
+                });
+            } else {
+                document.getElementById('productDetails').innerText = 'No product details found.';
+            }
+        };
+
+        function deleteProduct(id) {
+            let products = JSON.parse(localStorage.getItem('products')) || [];
+            products = products.filter(product => product.id !== id);
+            localStorage.setItem('products', JSON.stringify(products));
+            location.reload();
+        }
+    </script>
+</body>
+</html>
